@@ -2,6 +2,7 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { User, Mail, Calendar, TrendingUp, TrendingDown } from 'lucide-react'
 import Link from 'next/link'
+import ThemeSwitcher from '@/components/ThemeSwitcher'
 
 export default async function ProfilePage() {
     const supabase = await createClient()
@@ -111,6 +112,9 @@ export default async function ProfilePage() {
                             </div>
                         </div>
                     </div>
+
+                    {/* Card de Seletor de Tema */}
+                    <ThemeSwitcher />
 
                     {/* Card de Estatísticas */}
                     <div className="card">

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
-import { LogIn } from 'lucide-react'
+import { LogIn, TrendingUp, TrendingDown, Tags, Users } from 'lucide-react'
 import LogoutButton from './LogoutButton'
 
 export default async function Header() {
@@ -13,6 +13,26 @@ export default async function Header() {
         <Link href="/" className="logo">
           FinanceControl
         </Link>
+        {user && (
+          <nav className="main-nav">
+            <Link href="/income" className="nav-link">
+              <TrendingUp size={18} />
+              Receitas
+            </Link>
+            <Link href="/expenses" className="nav-link">
+              <TrendingDown size={18} />
+              Despesas
+            </Link>
+            <Link href="/categories" className="nav-link">
+              <Tags size={18} />
+              Categorias
+            </Link>
+            <Link href="/debts" className="nav-link">
+              <Users size={18} />
+              Dívidas
+            </Link>
+          </nav>
+        )}
         <nav>
           {user ? (
             <div className="user-menu">
