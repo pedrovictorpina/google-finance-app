@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import Header from '@/components/Header'
+import { ArrowLeft } from 'lucide-react'
 import { createTransaction } from '../actions'
 
 export default function NewTransactionPage() {
@@ -11,10 +11,12 @@ export default function NewTransactionPage() {
 
     return (
         <main className="min-h-screen">
-            <Header />
             <div className="container" style={{ marginTop: '2rem', maxWidth: '600px' }}>
                 <header className="mb-4">
-                    <Link href="/" className="back-link">← Voltar</Link>
+                    <Link href="/" className="back-link">
+                        <ArrowLeft size={16} />
+                        Voltar
+                    </Link>
                     <h1 className="text-2xl font-bold mt-2">Nova Transação</h1>
                 </header>
 
@@ -104,100 +106,7 @@ export default function NewTransactionPage() {
                 </form>
             </div>
 
-            <style jsx>{`
-        .mb-4 { margin-bottom: 2rem; }
-        .mt-2 { margin-top: 0.5rem; }
-        .text-2xl { font-size: 1.5rem; }
-        .font-bold { font-weight: 700; }
-        .min-h-screen { min-height: 100vh; }
-        .back-link { text-decoration: none; color: var(--muted-foreground); font-size: 0.875rem; }
-        
-        .form-grid {
-          display: flex;
-          flex-direction: column;
-          gap: 1.5rem;
-        }
 
-        .type-selector {
-          display: flex;
-          background: var(--muted);
-          padding: 4px;
-          border-radius: var(--radius);
-        }
-        
-        .type-btn {
-          flex: 1;
-          padding: 8px;
-          border: none;
-          background: transparent;
-          border-radius: 4px;
-          font-weight: 600;
-          cursor: pointer;
-          color: var(--muted-foreground);
-          transition: all 0.2s;
-        }
-        
-        .type-btn.active {
-          background: var(--card);
-          box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-        
-        .type-btn.active.income { color: var(--success); }
-        .type-btn.active.expense { color: var(--danger); }
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-          gap: 0.5rem;
-        }
-        
-        .form-group label {
-          font-size: 0.875rem;
-          font-weight: 500;
-        }
-        
-        .input {
-          padding: 0.75rem;
-          border: 1px solid var(--border);
-          border-radius: var(--radius);
-          background: var(--background);
-          color: var(--foreground);
-          font-size: 1rem;
-        }
-        
-        .checkbox-group {
-           flex-direction: row;
-           align-items: center;
-        }
-        
-        .checkbox-label {
-           display: flex;
-           align-items: center;
-           gap: 0.5rem;
-           cursor: pointer;
-        }
-        
-        .sub-options {
-          padding: 1rem;
-          background: var(--muted);
-          border-radius: var(--radius);
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .actions {
-          margin-top: 1rem;
-        }
-        
-        .btn-primary {
-          background-color: var(--primary);
-          color: var(--primary-foreground);
-          font-size: 1rem;
-          height: 48px;
-          width: 100%;
-        }
-      `}</style>
         </main>
     )
 }

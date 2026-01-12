@@ -1,5 +1,7 @@
 import Link from 'next/link'
 import { createClient } from '@/utils/supabase/server'
+import { LogIn } from 'lucide-react'
+import LogoutButton from './LogoutButton'
 
 export default async function Header() {
   const supabase = await createClient()
@@ -14,52 +16,21 @@ export default async function Header() {
         <nav>
           {user ? (
             <div className="user-menu">
-              <div className="avatar">{user.email?.charAt(0).toUpperCase()}</div>
+              <Link href="/profile" title={user.email || 'Perfil'}>
+                <div className="avatar">
+                  {user.email?.charAt(0).toUpperCase()}
+                </div>
+              </Link>
+              <LogoutButton />
             </div>
           ) : (
-            <Link href="/login" className="btn-sm">Entrar</Link>
+            <Link href="/login" className="btn" style={{ fontSize: '0.875rem', padding: '0.5rem 1rem' }}>
+              <LogIn size={16} />
+              Entrar
+            </Link>
           )}
         </nav>
       </div>
-      <style jsx>{`
-        .header {
-          border-bottom: 1px solid var(--border);
-          background: var(--card);
-        }
-        .header-content {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          height: 60px;
-        }
-        .btn-sm {
-           padding: 0.5rem 1rem;
-           background: var(--primary);
-           color: var(--primary-foreground);
-           border-radius: var(--radius);
-           text-decoration: none;
-           font-size: 0.875rem;
-           font-weight: 500;
-        }
-        .logo {
-          font-weight: 700;
-          font-size: 1.25rem;
-          color: var(--foreground);
-          text-decoration: none;
-        }
-        .avatar {
-          width: 32px;
-          height: 32px;
-          background: var(--primary);
-          color: var(--primary-foreground);
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-weight: 600;
-          font-size: 0.875rem;
-        }
-      `}</style>
     </header>
   )
 }

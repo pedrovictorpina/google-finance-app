@@ -2,7 +2,6 @@
 
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-
 import { createClient } from '@/utils/supabase/server'
 
 export async function login(formData: FormData) {
@@ -13,10 +12,12 @@ export async function login(formData: FormData) {
         password: formData.get('password') as string,
     }
 
+    // Note: persistSession is handled by the middleware cookie configuration
     const { error } = await supabase.auth.signInWithPassword(data)
 
     if (error) {
-        redirect('/error')
+        console.error('Login error:', error.message)
+        redirect('/login?error=invalid_credentials')
     }
 
     revalidatePath('/', 'layout')
@@ -31,12 +32,18 @@ export async function signup(formData: FormData) {
         password: formData.get('password') as string,
     }
 
-    const { error } = await supabase.auth.signUp(data)
+    const { error } = await supabase.auth.signUp({
+        ...data,
+        options: {
+            emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/callback`
+        }
+    })
 
     if (error) {
-        redirect('/error')
+        console.error('Signup error:', error.message)
+        redirect('/login?error=signup_failed')
     }
 
     revalidatePath('/', 'layout')
-    redirect('/')
+    redirect('/?success=check_email')
 }
