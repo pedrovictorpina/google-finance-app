@@ -2,10 +2,11 @@
 
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts'
 
-interface CategoryData {
+export interface CategoryData {
     name: string
     value: number
     color: string
+    [key: string]: string | number  // Index signature for Recharts compatibility
 }
 
 interface CategoryPieChartProps {
@@ -54,22 +55,25 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
     return null
 }
 
-export default function CategoryPieChart({ data = defaultData }: CategoryPieChartProps) {
+export default function CategoryPieChart({ data }: CategoryPieChartProps) {
+    // Use provided data or fall back to default
+    const chartData = data && data.length > 0 ? data : defaultData
+
     return (
         <div style={{ width: '100%', height: 300 }}>
             <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                     <Pie
-                        data={data}
+                        data={chartData}
                         cx="50%"
                         cy="50%"
                         labelLine={false}
                         outerRadius={80}
                         fill="#8884d8"
                         dataKey="value"
-                        label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                        label={({ name, percent }) => `${name} ${((percent || 0) * 100).toFixed(0)}%`}
                     >
-                        {data.map((entry, index) => (
+                        {chartData.map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={entry.color || COLORS[index % COLORS.length]} />
                         ))}
                     </Pie>
